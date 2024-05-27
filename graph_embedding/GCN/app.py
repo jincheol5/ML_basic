@@ -18,14 +18,19 @@ from train_module import Trainer
 # validation node = 500
 # test node = 1000
 
+# GPU 장치 설정
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f'Using device: {device}')
+
 
 # Cora dataset load
 dataset=Planetoid(root='/tmp/Cora',name='Cora')
-data=dataset[0] 
+data=dataset[0]
+data.to(device) 
 
 ### model training ###
 # load model
-model=GCN(dataset.num_features,16,dataset.num_classes) # hidden layer feature = 16
+model=GCN(dataset.num_features,16,dataset.num_classes).to(device) # hidden layer feature = 16
 
 # train
 model_trainer=Trainer(model)

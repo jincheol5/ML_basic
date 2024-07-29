@@ -19,6 +19,8 @@ class StockDataProcess:
         self.df=pd.read_csv(file_path+"/stock.csv")
         self.seq_length=seq_length
 
+        print(self.df.shape,"\n")
+
         ### Data load
         # 주식 시장의 경우 최근 가격에서 과거로 거슬러 올라가며 패턴을 분석할 수 있다. -> 데이터 역순으로 정렬하여 최근 데이터 우선 학습
         # 데이터를 역순으로 정렬하여 전체 데이터의 70% 학습, 30% 테스트에 사용

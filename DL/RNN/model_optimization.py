@@ -37,11 +37,11 @@ class Optimization:
         # torch.no_grad()를 사용하여 테스트 시 변화도(gradient)를 계산하지 않도록 합니다.
         # 이는 requires_grad=True로 설정된 텐서들의 불필요한 변화도 연산 및 메모리 사용량 또한 줄여줍니다.
         with torch.no_grad():
-            for inputs,targets in tqdm(dataloader):
+            for batch_idx,(inputs,targets) in enumerate(tqdm(dataloader)):
                 pred = self.model(inputs)
                 mse_loss = loss_fn(pred,targets)
-                print("Mean Squared Error: ",mse_loss,"\n")
+                print((batch_idx+1)," batch Mean Squared Error: ",mse_loss,"\n")
                 
         print("model test end\n")
-        # print("TEST Result: \n Accuracy: ",correct,", Avg loss: ",test_loss,"\n")
+
 

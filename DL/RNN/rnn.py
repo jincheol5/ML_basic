@@ -15,20 +15,24 @@ class CustomRNNCell(nn.Module):
         self.act=nn.Tanh()
 
     def forward(self,x_seq):
-        # x = input sequence (seq_len * input_dim)
+        # input x_seq = [batch_size,seq_len,input_dim]
 
-        seq_len=len(x_seq)
+        batch_size,seq_len,input_dim=x_seq.size()
 
         h_0=torch.zeros(self.hidden_dim)
 
-        prev_h_t=h_0
-        h_t=h_0
+        output_h_t=torch.zeros(batch_size,self.hidden_dim)
 
-        for t in range(seq_len):
-            h_t=self.act(self.W_h(prev_h_t)+self.W_x(x_seq[t]))
-            prev_h_t=h_t
+        for batch in range(batch_size):
+            prev_h_t=h_0
+            h_t=h_0
+            for t in range(seq_len):
+                h_t=self.act(self.W_h(prev_h_t)+self.W_x(x_seq[batch][t]))
+                prev_h_t=h_t
+            
+            output_h_t[batch]=h_t
 
-        return h_t
+        return output_h_t
 
 
 # many-to-one rnn model
@@ -43,5 +47,6 @@ class CustomRNN(nn.Module):
         self.fc=nn.Linear(self.hidden_dim,self.output_dim)
 
     def forward(self,x_seq):
+        # input x_seq = [batch_size,seq_len,input_dim] 형태이다. 
         hidden_state=self.rnn_cell(x_seq)
         return self.fc(hidden_state)

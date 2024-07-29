@@ -33,15 +33,23 @@ class StockDataProcess:
         scaler_x = MinMaxScaler()
         scaler_x.fit(self.train_set.iloc[:, :-1]) # train_set의 모든 행과 마지막 열을 제외한 모든 열을 사용하여 스케일러의 최소값과 최대값 설정
 
-        self.train_set.iloc[:, :-1] = scaler_x.transform(self.train_set.iloc[:, :-1]).astype(np.float64) # 학습한 스케일러를 사용하여 train_set의 입력 데이터를 변환. 모든 행과 마지막 열을 제외한 모든 열을 스케일링
-        self.test_set.iloc[:, :-1] = scaler_x.transform(self.test_set.iloc[:, :-1]).astype(np.float64) # 동일한 스케일러를 사용하여 test_set의 입력 데이터를 변환. 이렇게 함으로써 테스트 데이터도 학습 데이터와 동일한 스케일로 변환
+        # 먼저 데이터를 명시적으로 float64로 변환
+        self.train_set.iloc[:, :-1] = self.train_set.iloc[:, :-1].astype(np.float64)
+        self.test_set.iloc[:, :-1] = self.test_set.iloc[:, :-1].astype(np.float64)
+
+        # 이후 scaler 적용
+        self.train_set.iloc[:, :-1] = scaler_x.transform(self.train_set.iloc[:, :-1]) # 학습한 스케일러를 사용하여 train_set의 입력 데이터를 변환. 모든 행과 마지막 열을 제외한 모든 열을 스케일링
+        self.test_set.iloc[:, :-1] = scaler_x.transform(self.test_set.iloc[:, :-1]) # 동일한 스케일러를 사용하여 test_set의 입력 데이터를 변환. 이렇게 함으로써 테스트 데이터도 학습 데이터와 동일한 스케일로 변환
 
         # Output scale
         scaler_y = MinMaxScaler()
         scaler_y.fit(self.train_set.iloc[:, [-1]]) # train_set의 마지막 열을 사용하여 스케일러를 학습
 
-        self.train_set.iloc[:, -1] = scaler_y.transform(self.train_set.iloc[:, [-1]]).astype(np.float64) # 출력 데이터 변환
-        self.test_set.iloc[:, -1] = scaler_y.transform(self.test_set.iloc[:, [-1]]).astype(np.float64) # 출력 데이터 변환
+        self.train_set.iloc[:, -1]=self.train_set.iloc[:, -1].astype(np.float64)
+        self.test_set.iloc[:, -1]=self.test_set.iloc[:, -1].astype(np.float64)
+
+        self.train_set.iloc[:, -1] = scaler_y.transform(self.train_set.iloc[:, [-1]]) # 출력 데이터 변환
+        self.test_set.iloc[:, -1] = scaler_y.transform(self.test_set.iloc[:, [-1]]) # 출력 데이터 변환
 
     def change_dataset_to_nparray(self):
 
@@ -85,8 +93,8 @@ class StockDataProcess:
 
         train_dataset,test_dataset=self.change_dataset_to_TensorDataset()
 
-        train_DataLoader=DataLoader(train_dataset,batch_size=batch_size,shuffle=True,drop_last=False)
+        train_DataLoader=DataLoader(train_dataset,batch_size=batch_size,shuffle=True,drop_last=True)
 
-        test_DataLoader=DataLoader(test_dataset,batch_size=batch_size,shuffle=True,drop_last=False)
+        test_DataLoader=DataLoader(test_dataset,batch_size=batch_size,shuffle=True,drop_last=True)
 
         return train_DataLoader,test_DataLoader

@@ -27,6 +27,8 @@ class Optimization:
             loss.backward()
             self.optimizer.step()
             self.optimizer.zero_grad()
+        
+        print("model train end\n")
     
     def test_model(self,dataloader,loss_fn):
 
@@ -40,6 +42,6 @@ class Optimization:
                 mse_loss = loss_fn(pred,targets)
                 print("Mean Squared Error: ",mse_loss,"\n")
                 
-
+        print("model test end\n")
         # print("TEST Result: \n Accuracy: ",correct,", Avg loss: ",test_loss,"\n")
 

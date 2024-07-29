@@ -1,4 +1,5 @@
 import torch
+import torch.nn as nn
 import torch.optim as optim
 from tqdm import tqdm
 
@@ -16,7 +17,7 @@ class Optimization:
         
         self.model.train()
 
-        for batch_idx,(inputs,targets) in tqdm(enumerate(dataloader)):
+        for batch_idx,(inputs,targets) in enumerate(tqdm(dataloader)):
             
             # 예측과 손실 계산
             pred=self.model(inputs)
@@ -30,19 +31,15 @@ class Optimization:
     def test_model(self,dataloader,loss_fn):
 
         self.model.eval()
-        size = len(dataloader.dataset)
-        num_batches = len(dataloader)
-        test_loss, correct = 0, 0
 
         # torch.no_grad()를 사용하여 테스트 시 변화도(gradient)를 계산하지 않도록 합니다.
         # 이는 requires_grad=True로 설정된 텐서들의 불필요한 변화도 연산 및 메모리 사용량 또한 줄여줍니다.
         with torch.no_grad():
             for inputs,targets in tqdm(dataloader):
                 pred = self.model(inputs)
-                test_loss += loss_fn(pred, targets).item()
-                correct += (pred.argmax(1) == targets).type(torch.float).sum().item()
+                mse_loss = loss_fn(pred,targets)
+                print("Mean Squared Error: ",mse_loss,"\n")
+                
 
-        test_loss /= num_batches
-        correct /= size
-        print("TEST Result: \n Accuracy: ",correct,", Avg loss: ",test_loss,"\n")
+        # print("TEST Result: \n Accuracy: ",correct,", Avg loss: ",test_loss,"\n")
 

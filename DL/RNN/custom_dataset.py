@@ -33,8 +33,8 @@ class StockDataProcess:
         scaler_x = MinMaxScaler()
         scaler_x.fit(self.train_set.iloc[:, :-1]) # train_set의 모든 행과 마지막 열을 제외한 모든 열을 사용하여 스케일러의 최소값과 최대값 설정
 
-        self.train_set.iloc[:, :-1] = scaler_x.transform(self.train_set.iloc[:, :-1]) # 학습한 스케일러를 사용하여 train_set의 입력 데이터를 변환. 모든 행과 마지막 열을 제외한 모든 열을 스케일링
-        self.test_set.iloc[:, :-1] = scaler_x.transform(self.test_set.iloc[:, :-1]) # 동일한 스케일러를 사용하여 test_set의 입력 데이터를 변환. 이렇게 함으로써 테스트 데이터도 학습 데이터와 동일한 스케일로 변환
+        self.train_set.iloc[:, :-1] = scaler_x.transform(self.train_set.iloc[:, :-1]).astype(np.float64) # 학습한 스케일러를 사용하여 train_set의 입력 데이터를 변환. 모든 행과 마지막 열을 제외한 모든 열을 스케일링
+        self.test_set.iloc[:, :-1] = scaler_x.transform(self.test_set.iloc[:, :-1]).astype(np.float64) # 동일한 스케일러를 사용하여 test_set의 입력 데이터를 변환. 이렇게 함으로써 테스트 데이터도 학습 데이터와 동일한 스케일로 변환
 
         # Output scale
         scaler_y = MinMaxScaler()
@@ -49,8 +49,8 @@ class StockDataProcess:
         train_y=[]
 
         for index in range(0,len(self.train_set)-self.seq_length):
-            _x=self.train_set[index:index+self.seq_length,:]
-            _y=self.train_set[index+self.seq_length, [-1]]
+            _x=self.train_set.iloc[index:index+self.seq_length,:]
+            _y=self.train_set.iloc[index+self.seq_length, [-1]]
             train_X.append(_x)
             train_y.append(_y)
 
@@ -58,8 +58,8 @@ class StockDataProcess:
         test_y=[]
 
         for index in range(0,len(self.test_set)-self.seq_length):
-            _x=self.test_set[index:index+self.seq_length,:]
-            _y=self.test_set[index+self.seq_length, [-1]]
+            _x=self.test_set.iloc[index:index+self.seq_length,:]
+            _y=self.test_set.iloc[index+self.seq_length, [-1]]
             test_X.append(_x)
             test_y.append(_y)
         

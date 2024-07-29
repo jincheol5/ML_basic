@@ -18,8 +18,8 @@ class Optimization:
 
         for batch_idx,(inputs,targets) in tqdm(enumerate(dataloader)):
             
-            print(inputs)
-            print(targets)
+            print(inputs.size())
+            print(targets.size())
 
             # 예측과 손실 계산
             pred=self.model(inputs)

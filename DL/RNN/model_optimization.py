@@ -18,9 +18,6 @@ class Optimization:
 
         for batch_idx,(inputs,targets) in tqdm(enumerate(dataloader)):
             
-            print(inputs.size())
-            print(targets.size())
-
             # 예측과 손실 계산
             pred=self.model(inputs)
             loss=loss_fn(pred,targets)
@@ -32,7 +29,7 @@ class Optimization:
     
     def test_model(self,dataloader,loss_fn):
 
-        self.model.test()
+        self.model.eval()
         size = len(dataloader.dataset)
         num_batches = len(dataloader)
         test_loss, correct = 0, 0

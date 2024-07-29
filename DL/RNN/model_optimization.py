@@ -17,6 +17,9 @@ class Optimization:
         self.model.train()
 
         for batch_idx,(inputs,targets) in tqdm(enumerate(dataloader)):
+            
+            print(inputs)
+            print(targets)
 
             # 예측과 손실 계산
             pred=self.model(inputs)

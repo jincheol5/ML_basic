@@ -17,7 +17,7 @@ class CustomRNNCell(nn.Module):
     def forward(self,x_seq):
         # x = input sequence (seq_len * input_dim)
 
-        seq_len,_=x_seq.size()
+        seq_len=len(x_seq)
 
         h_0=torch.zeros(self.hidden_dim)
 

@@ -40,8 +40,8 @@ class StockDataProcess:
         scaler_y = MinMaxScaler()
         scaler_y.fit(self.train_set.iloc[:, [-1]]) # train_set의 마지막 열을 사용하여 스케일러를 학습
 
-        self.train_set.iloc[:, -1] = scaler_y.transform(self.train_set.iloc[:, [-1]]) # 출력 데이터 변환
-        self.test_set.iloc[:, -1] = scaler_y.transform(self.test_set.iloc[:, [-1]]) # 출력 데이터 변환
+        self.train_set.iloc[:, -1] = scaler_y.transform(self.train_set.iloc[:, [-1]]).astype(np.float64) # 출력 데이터 변환
+        self.test_set.iloc[:, -1] = scaler_y.transform(self.test_set.iloc[:, [-1]]).astype(np.float64) # 출력 데이터 변환
 
     def change_dataset_to_nparray(self):
 

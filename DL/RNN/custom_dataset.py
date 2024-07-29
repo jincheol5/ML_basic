@@ -16,7 +16,7 @@ file_path = os.path.join(grandparent_path, "data") # data 파일 상대 경로
 
 class StockDataProcess:
     def __init__(self,seq_length):
-        self.df=pd.read_csv(file_path)
+        self.df=pd.read_csv(file_path+"\\stock.csv")
         self.seq_length=seq_length
 
         ### Data load

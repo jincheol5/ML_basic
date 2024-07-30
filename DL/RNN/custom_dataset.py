@@ -30,20 +30,20 @@ class StockDataProcess:
         self.test_set = self.df[train_size-self.seq_length:] # train_size-seq_length부터 시작 -> 시계열 데이터의 연속성을 유지하면서 학습 데이터와 테스트 데이터를 자연스럽게 연결
 
 
-        ### Data scaling
-        # input scale
-        scaler_x = MinMaxScaler()
-        scaler_x.fit(self.train_set.iloc[:, :-1]) # train_set의 모든 행과 마지막 열을 제외한 모든 열을 사용하여 스케일러의 최소값과 최대값 설정
+        # ### Data scaling
+        # # input scale
+        # scaler_x = MinMaxScaler()
+        # scaler_x.fit(self.train_set.iloc[:, :-1]) # train_set의 모든 행과 마지막 열을 제외한 모든 열을 사용하여 스케일러의 최소값과 최대값 설정
 
-        self.train_set.iloc[:, :-1] = scaler_x.transform(self.train_set.iloc[:, :-1]) # 학습한 스케일러를 사용하여 train_set의 입력 데이터를 변환. 모든 행과 마지막 열을 제외한 모든 열을 스케일링
-        self.test_set.iloc[:, :-1] = scaler_x.transform(self.test_set.iloc[:, :-1]) # 동일한 스케일러를 사용하여 test_set의 입력 데이터를 변환. 이렇게 함으로써 테스트 데이터도 학습 데이터와 동일한 스케일로 변환
+        # self.train_set.iloc[:, :-1] = scaler_x.transform(self.train_set.iloc[:, :-1]) # 학습한 스케일러를 사용하여 train_set의 입력 데이터를 변환. 모든 행과 마지막 열을 제외한 모든 열을 스케일링
+        # self.test_set.iloc[:, :-1] = scaler_x.transform(self.test_set.iloc[:, :-1]) # 동일한 스케일러를 사용하여 test_set의 입력 데이터를 변환. 이렇게 함으로써 테스트 데이터도 학습 데이터와 동일한 스케일로 변환
 
-        # Output scale
-        scaler_y = MinMaxScaler()
-        scaler_y.fit(self.train_set.iloc[:, [-1]]) # train_set의 마지막 열을 사용하여 스케일러를 학습
+        # # Output scale
+        # scaler_y = MinMaxScaler()
+        # scaler_y.fit(self.train_set.iloc[:, [-1]]) # train_set의 마지막 열을 사용하여 스케일러를 학습
 
-        self.train_set.iloc[:, -1] = scaler_y.transform(self.train_set.iloc[:, [-1]]) # 출력 데이터 변환
-        self.test_set.iloc[:, -1] = scaler_y.transform(self.test_set.iloc[:, [-1]]) # 출력 데이터 변환
+        # self.train_set.iloc[:, -1] = scaler_y.transform(self.train_set.iloc[:, [-1]]) # 출력 데이터 변환
+        # self.test_set.iloc[:, -1] = scaler_y.transform(self.test_set.iloc[:, [-1]]) # 출력 데이터 변환
 
     def change_dataset_to_nparray(self):
 

@@ -6,8 +6,10 @@ from tqdm import tqdm
 # GPU 사용 가능한지 확인
 if torch.cuda.is_available():
     device = torch.device("cuda")
+    print("GPU is available\n")
 else:
     device = torch.device("cpu")
+    print("GPU is not available, using CPU instead\n")
 
 class Optimization:
 

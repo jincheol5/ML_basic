@@ -79,4 +79,4 @@ class PytorchRNN(nn.Module):
         # batch_first=true인 경우 output=[batch_size,seq_len,output_dim]
         output,_ = self.rnn(x_seq, h_0)
 
-        return self.fc(output)
+        return self.fc(output[:, -1, :])

@@ -1,4 +1,4 @@
-from rnn import CustomRNN
+from rnn import CustomRNN,PytorchRNN
 from custom_dataset import StockDataProcess
 from model_optimization import Optimization
 
@@ -35,16 +35,33 @@ lr=0.01
 batch_size=100
 epochs=100
 
+### custom RNN
 # model
-model=CustomRNN(input_dim=5,hidden_dim=10,output_dim=1)
+custom_model=CustomRNN(input_dim=5,hidden_dim=10,output_dim=1).to(device)
 
 # get DataLoader
 SDP=StockDataProcess(seq_length=7)
 train_DataLoader,test_DataLoader=SDP.get_DataLoader(batch_size=batch_size) 
 
 # train model
-optimization=Optimization(model=model,epochs=epochs,lr=lr)
+optimization=Optimization(model=custom_model,epochs=epochs,lr=lr)
 optimization.train_model(dataloader=train_DataLoader,loss_fn=nn.MSELoss())
 
 # test model
 optimization.test_model(dataloader=test_DataLoader,loss_fn=nn.MSELoss())
+
+### pytorch RNN
+# model
+pytorch_model=PytorchRNN(input_dim=5,hidden_dim=10,output_dim=1).to(device)
+
+# get DataLoader
+SDP=StockDataProcess(seq_length=7)
+train_DataLoader,test_DataLoader=SDP.get_DataLoader(batch_size=batch_size) 
+
+# train model
+optimization=Optimization(model=pytorch_model,epochs=epochs,lr=lr)
+optimization.train_model(dataloader=train_DataLoader,loss_fn=nn.MSELoss())
+
+# test model
+optimization.test_model(dataloader=test_DataLoader,loss_fn=nn.MSELoss())
+

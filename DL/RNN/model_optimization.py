@@ -3,6 +3,11 @@ import torch.nn as nn
 import torch.optim as optim
 from tqdm import tqdm
 
+# GPU 사용 가능한지 확인
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+else:
+    device = torch.device("cpu")
 
 class Optimization:
 
@@ -19,6 +24,9 @@ class Optimization:
 
         for batch_idx,(inputs,targets) in enumerate(tqdm(dataloader)):
             
+            inputs.to(device)
+            targets.to(device)
+
             # 예측과 손실 계산
             pred=self.model(inputs)
             loss=loss_fn(pred,targets)
@@ -38,6 +46,10 @@ class Optimization:
         # 이는 requires_grad=True로 설정된 텐서들의 불필요한 변화도 연산 및 메모리 사용량 또한 줄여줍니다.
         with torch.no_grad():
             for batch_idx,(inputs,targets) in enumerate(tqdm(dataloader)):
+
+                inputs.to(device)
+                targets.to(device)
+
                 pred = self.model(inputs)
                 mse_loss = loss_fn(pred,targets)
                 print((batch_idx+1)," batch Mean Squared Error: ",mse_loss,"\n")

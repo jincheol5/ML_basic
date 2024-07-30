@@ -6,10 +6,8 @@ from tqdm import tqdm
 # GPU 사용 가능한지 확인
 if torch.cuda.is_available():
     device = torch.device("cuda")
-    print("GPU is available\n")
 else:
     device = torch.device("cpu")
-    print("GPU is not available, using CPU instead\n")
 
 class Optimization:
 
@@ -27,9 +25,6 @@ class Optimization:
             
             inputs=inputs.to(device) # 이동된 텐서를 다시 할당 해야 한다
             targets=targets.to(device) # 이동된 텐서를 다시 할당 해야 한다
-
-            print(inputs.device)
-            print(targets.device)
 
             # 예측과 손실 계산
             pred=self.model(inputs)

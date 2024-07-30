@@ -60,8 +60,9 @@ class PytorchRNN(nn.Module):
         self.input_dim=input_dim
         self.hidden_dim=hidden_dim
         self.output_dim=output_dim
+        self.num_layers=1
 
-        self.rnn=nn.RNN(self.input_dim,self.hidden_dim,batch_first=True)
+        self.rnn=nn.RNN(self.input_dim,self.hidden_dim,num_layers=self.num_layers,batch_first=True)
         self.fc=nn.Linear(self.hidden_dim,self.output_dim)
 
     def forward(self,x_seq):
@@ -72,7 +73,7 @@ class PytorchRNN(nn.Module):
         batch_size,seq_len,input_dim=x_seq.size()
 
         device = x_seq.device  # Ensure all tensors are on the correct device
-        h_0=torch.zeros(batch_size,self.hidden_dim,device=device)
+        h_0=torch.zeros(self.num_layers,batch_size,self.hidden_dim,device=device)
 
         # nn.RNN의 반환값 = output (all time step에 대한 출력), hn (마지막 time step에서 각 층과 각 방향의 hidden state)
         # batch_first=true인 경우 output=[batch_size,seq_len,output_dim]

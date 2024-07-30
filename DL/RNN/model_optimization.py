@@ -12,7 +12,7 @@ class Optimization:
         self.lr=lr
         self.optimizer=optim.Adam(self.model.parameters(), lr = self.lr)
         self.device=device
-        print(device)
+        
 
     def train_model(self,dataloader,loss_fn):
         
@@ -22,6 +22,9 @@ class Optimization:
             
             inputs.to(self.device)
             targets.to(self.device)
+
+            print(inputs.device)
+            print(targets.device)
 
             # 예측과 손실 계산
             pred=self.model(inputs)

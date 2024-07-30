@@ -12,6 +12,7 @@ class Optimization:
         self.lr=lr
         self.optimizer=optim.Adam(self.model.parameters(), lr = self.lr)
         self.device=device
+        print(device)
 
     def train_model(self,dataloader,loss_fn):
         

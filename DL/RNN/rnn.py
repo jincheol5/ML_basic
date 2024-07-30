@@ -24,30 +24,23 @@ class CustomRNNCell(nn.Module):
 
         output_h_t=torch.zeros(batch_size,self.hidden_dim,device=device)
 
-        # for batch in range(batch_size):
-        #     prev_h_t=h_0
-        #     h_t=h_0
-
-        #     for t in range(seq_len):
-        #         h_t=self.act(self.W_h(prev_h_t)+self.W_x(x_seq[batch][t]))
-        #         prev_h_t=h_t
-            
-        #     output_h_t[batch]=h_t
+        print(f"h_0 is on {h_0.device}, expected {device}")
+        print(f"output_h_t is on {output_h_t.device}, expected {device}")
 
         for batch in range(batch_size):
-            prev_h_t = h_0
-            h_t = h_0
+            prev_h_t=h_0
+            h_t=h_0
+
+            print(f"prev_h_t is on {prev_h_t.device}, expected {device}")
+            print(f"h_t is on {h_t.device}, expected {device}")
+
+            print(f"x_seq[batch][t] is on {x_seq[batch][t].device}, expected {device}")
 
             for t in range(seq_len):
-                assert prev_h_t.device == device, f"prev_h_t is on {prev_h_t.device}, expected {device}"
-                assert x_seq[batch][t].device == device, f"x_seq[batch][t] is on {x_seq[batch][t].device}, expected {device}"
-                h_t = self.act(self.W_h(prev_h_t) + self.W_x(x_seq[batch][t]))
-                prev_h_t = h_t
+                h_t=self.act(self.W_h(prev_h_t)+self.W_x(x_seq[batch][t]))
+                prev_h_t=h_t
 
-        assert h_t.device == device, f"h_t is on {h_t.device}, expected {device}"
-        output_h_t[batch] = h_t
-
-        assert output_h_t.device == device, f"output_h_t is on {output_h_t.device}, expected {device}"
+            output_h_t[batch]=h_t
 
         return output_h_t
 

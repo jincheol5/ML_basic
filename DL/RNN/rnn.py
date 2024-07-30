@@ -1,11 +1,6 @@
 import torch
 import torch.nn as nn
 
-# GPU 사용 가능한지 확인
-if torch.cuda.is_available():
-    device = torch.device("cuda")
-else:
-    device = torch.device("cpu")
 
 class CustomRNNCell(nn.Module):
     def __init__(self,input_dim,hidden_dim):
@@ -23,9 +18,9 @@ class CustomRNNCell(nn.Module):
 
         batch_size,seq_len,input_dim=x_seq.size()
 
-        h_0=torch.zeros(self.hidden_dim)
+        h_0=torch.zeros(self.hidden_dim).cuda()
 
-        output_h_t=torch.zeros(batch_size,self.hidden_dim)
+        output_h_t=torch.zeros(batch_size,self.hidden_dim).cuda()
 
         for batch in range(batch_size):
             prev_h_t=h_0
@@ -72,7 +67,7 @@ class PytorchRNN(nn.Module):
         # nn.RNN의 입력 형태는 [seq_len,batch_size,dim] 형태이다.
         # 따라서, batch_first 옵션을 사용하여 입력 형태가 [batch_size,seq_len,input_dim] 로 바뀐다.
         
-        h_0=torch.zeros(self.hidden_dim).to(device)
+        h_0=torch.zeros(self.hidden_dim).cuda()
 
         # nn.RNN의 반환값 = output (all time step에 대한 출력), hn (마지막 time step에서 각 층과 각 방향의 hidden state)
         # batch_first=true인 경우 output=[batch_size,seq_len,output_dim]

@@ -61,7 +61,7 @@ class PytorchRNN(nn.Module):
         self.hidden_dim=hidden_dim
         self.output_dim=output_dim
 
-        self.rnn_cell=nn.RNN(self.input_dim,self.hidden_dim,batch_first=True)
+        self.rnn=nn.RNN(self.input_dim,self.hidden_dim,batch_first=True)
         self.fc=nn.Linear(self.hidden_dim,self.output_dim)
 
     def forward(self,x_seq):

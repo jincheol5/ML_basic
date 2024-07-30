@@ -59,7 +59,7 @@ SDP=StockDataProcess(seq_length=7)
 train_DataLoader,test_DataLoader=SDP.get_DataLoader(batch_size=batch_size) 
 
 # train model
-optimization=Optimization(model=pytorch_model,epochs=epochs,lr=lr)
+optimization=Optimization(model=pytorch_model,epochs=epochs,lr=lr,device=device)
 optimization.train_model(dataloader=train_DataLoader,loss_fn=nn.MSELoss())
 
 # test model

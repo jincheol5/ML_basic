@@ -25,8 +25,8 @@ class Optimization:
 
         for batch_idx,(inputs,targets) in enumerate(tqdm(dataloader)):
             
-            inputs.to(device)
-            targets.to(device)
+            inputs=inputs.to(device) # 이동된 텐서를 다시 할당 해야 한다
+            targets=targets.to(device) # 이동된 텐서를 다시 할당 해야 한다
 
             print(inputs.device)
             print(targets.device)
@@ -51,8 +51,8 @@ class Optimization:
         with torch.no_grad():
             for batch_idx,(inputs,targets) in enumerate(tqdm(dataloader)):
 
-                inputs.to(device)
-                targets.to(device)
+                inputs=inputs.to(device) # 이동된 텐서를 다시 할당 해야 한다
+                targets=targets.to(device) # 이동된 텐서를 다시 할당 해야 한다
 
                 pred = self.model(inputs)
                 mse_loss = loss_fn(pred,targets)

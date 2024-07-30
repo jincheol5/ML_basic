@@ -18,9 +18,11 @@ class CustomRNNCell(nn.Module):
 
         batch_size,seq_len,input_dim=x_seq.size()
 
-        h_0=torch.zeros(self.hidden_dim).cuda()
+        device=x_seq.device # Ensure all tensors are on the correct device
 
-        output_h_t=torch.zeros(batch_size,self.hidden_dim).cuda()
+        h_0=torch.zeros(self.hidden_dim,device=device)
+
+        output_h_t=torch.zeros(batch_size,self.hidden_dim,device=device)
 
         for batch in range(batch_size):
             prev_h_t=h_0
@@ -67,7 +69,8 @@ class PytorchRNN(nn.Module):
         # nn.RNN의 입력 형태는 [seq_len,batch_size,dim] 형태이다.
         # 따라서, batch_first 옵션을 사용하여 입력 형태가 [batch_size,seq_len,input_dim] 로 바뀐다.
         
-        h_0=torch.zeros(self.hidden_dim).cuda()
+        device = x_seq.device  # Ensure all tensors are on the correct device
+        h_0=torch.zeros(self.hidden_dim,device=device)
 
         # nn.RNN의 반환값 = output (all time step에 대한 출력), hn (마지막 time step에서 각 층과 각 방향의 hidden state)
         # batch_first=true인 경우 output=[batch_size,seq_len,output_dim]

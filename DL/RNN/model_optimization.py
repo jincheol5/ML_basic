@@ -3,6 +3,12 @@ import torch.nn as nn
 import torch.optim as optim
 from tqdm import tqdm
 
+# GPU 사용 가능한지 확인
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+else:
+    device = torch.device("cpu")
+
 
 class Optimization:
 
@@ -19,8 +25,8 @@ class Optimization:
 
         for batch_idx,(inputs,targets) in enumerate(tqdm(dataloader)):
             
-            inputs.cuda()
-            targets.cuda()
+            inputs.to(device)
+            targets.to(device)
 
             # 예측과 손실 계산
             pred=self.model(inputs)
@@ -42,8 +48,8 @@ class Optimization:
         with torch.no_grad():
             for batch_idx,(inputs,targets) in enumerate(tqdm(dataloader)):
 
-                inputs.cuda()
-                targets.cuda()
+                inputs.to(device)
+                targets.to(device)
 
                 pred = self.model(inputs)
                 mse_loss = loss_fn(pred,targets)

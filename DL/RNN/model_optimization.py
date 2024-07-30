@@ -3,16 +3,19 @@ import torch.nn as nn
 import torch.optim as optim
 from tqdm import tqdm
 
+# GPU 사용 가능한지 확인
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+else:
+    device = torch.device("cpu")
 
 class Optimization:
 
-    def __init__(self,model,epochs,lr,device):
+    def __init__(self,model,epochs,lr):
         self.model=model
         self.epochs=epochs
         self.lr=lr
         self.optimizer=optim.Adam(self.model.parameters(), lr = self.lr)
-        self.device=device
-        
 
     def train_model(self,dataloader,loss_fn):
         
@@ -20,8 +23,8 @@ class Optimization:
 
         for batch_idx,(inputs,targets) in enumerate(tqdm(dataloader)):
             
-            inputs.to(self.device)
-            targets.to(self.device)
+            inputs.to(device)
+            targets.to(device)
 
             print(inputs.device)
             print(targets.device)
@@ -46,8 +49,8 @@ class Optimization:
         with torch.no_grad():
             for batch_idx,(inputs,targets) in enumerate(tqdm(dataloader)):
 
-                inputs.to(self.device)
-                targets.to(self.device)
+                inputs.to(device)
+                targets.to(device)
 
                 pred = self.model(inputs)
                 mse_loss = loss_fn(pred,targets)

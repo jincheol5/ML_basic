@@ -1,6 +1,7 @@
-from lstm import CustomLSTM
+from lstm import CustomLSTM,PytorchLSTM
 from custom_dataset import StockDataProcess
 from model_optimization import Optimization
+from tqdm import tqdm
 
 import os
 import numpy as np
@@ -33,9 +34,9 @@ else:
 # hyperparameter
 lr=0.01
 batch_size=100
-epochs=100
+epochs=10
 
-### custom RNN
+### custom LSTM
 # model
 custom_model=CustomLSTM(input_dim=5,hidden_dim=10,output_dim=1).to(device)
 
@@ -45,10 +46,23 @@ train_DataLoader,test_DataLoader=SDP.get_DataLoader(batch_size=batch_size)
 
 # optimize model
 optimization=Optimization(model=custom_model,lr=lr)
-for epoch in range(epochs):
+for epoch in tqdm(range(epochs)):
     # train
     optimization.train_model(dataloader=train_DataLoader,loss_fn=nn.MSELoss())
 
     # test model
     optimization.test_model(dataloader=test_DataLoader,loss_fn=nn.MSELoss())
 
+
+### pytorch LSTM
+pytorch_model=PytorchLSTM(input_dim=5,hidden_dim=10,output_dim=1).to(device)
+
+# optimize model
+optimization=Optimization(model=pytorch_model,lr=lr)
+
+for epoch in tqdm(range(epochs)):
+    # train model
+    optimization.train_model(dataloader=train_DataLoader,loss_fn=nn.MSELoss())
+
+    # test model
+    optimization.test_model(dataloader=test_DataLoader,loss_fn=nn.MSELoss())

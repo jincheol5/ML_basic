@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from tqdm import tqdm
+
 
 # GPU 사용 가능한지 확인
 if torch.cuda.is_available():
@@ -20,7 +20,7 @@ class Optimization:
         
         self.model.train()
 
-        for batch_idx,(inputs,targets) in enumerate(tqdm(dataloader)):
+        for batch_idx,(inputs,targets) in enumerate(dataloader):
             
             inputs=inputs.to(device) # 이동된 텐서를 다시 할당 해야 한다
             targets=targets.to(device) # 이동된 텐서를 다시 할당 해야 한다
@@ -43,7 +43,7 @@ class Optimization:
         # torch.no_grad()를 사용하여 테스트 시 변화도(gradient)를 계산하지 않도록 합니다.
         # 이는 requires_grad=True로 설정된 텐서들의 불필요한 변화도 연산 및 메모리 사용량 또한 줄여줍니다.
         with torch.no_grad():
-            for batch_idx,(inputs,targets) in enumerate(tqdm(dataloader)):
+            for batch_idx,(inputs,targets) in enumerate(dataloader):
 
                 inputs=inputs.to(device) # 이동된 텐서를 다시 할당 해야 한다
                 targets=targets.to(device) # 이동된 텐서를 다시 할당 해야 한다

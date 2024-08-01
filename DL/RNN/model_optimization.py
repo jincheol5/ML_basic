@@ -11,9 +11,8 @@ else:
 
 class Optimization:
 
-    def __init__(self,model,epochs,lr):
+    def __init__(self,model,lr):
         self.model=model
-        self.epochs=epochs
         self.lr=lr
         self.optimizer=optim.Adam(self.model.parameters(), lr = self.lr)
 

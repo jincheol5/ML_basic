@@ -10,13 +10,14 @@ class Model_Trainer:
         optimizer=torch.optim.Adam(model.parameters(),lr=lr)
         model.to(device)
         model.train()
+        criterion=MSELoss()
         for epoch in tqdm(range(epochs),desc=f"model training..."):
             for batch in data_loader:
                 inputs,labels=batch
                 inputs=inputs.to(device)
                 labels=labels.to(device)
                 outputs=model(x=inputs)
-                loss=MSELoss(outputs,labels)
+                loss=criterion(outputs,labels)
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
@@ -26,6 +27,7 @@ class Model_Trainer:
         device=torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         model.to(device)
         model.eval()
+        criterion=MSELoss()
         with torch.no_grad():
             mse_loss_list=[]
             for batch in tqdm(data_loader,desc=f"model evaluating..."):
@@ -33,6 +35,6 @@ class Model_Trainer:
                 inputs=inputs.to(device)
                 labels=labels.to(device)
                 outputs=model(x=inputs)
-                mse_loss=MSELoss(outputs,labels)
-                mse_loss_list.append(mse_loss.item())
+                loss=criterion(outputs,labels)
+                mse_loss_list.append(loss.item())
         print(f"MSE Loss: {np.mean(mse_loss_list)}")

@@ -35,6 +35,6 @@ test_data_loader=DataLoader(dataset=test_dataset,batch_size=32,shuffle=True)
 """
 model set and train
 """
-model=CustomLinear(input_dim=1,hidden_dim=32,output_dim=1)
+model=CustomLinear(input_dim=1,output_dim=1)
 Model_Trainer.train(model=model,data_loader=train_data_loader,lr=0.0005,epochs=100)
 Model_Trainer.test(model=model,data_loader=test_data_loader)

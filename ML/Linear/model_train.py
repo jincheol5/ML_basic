@@ -12,8 +12,9 @@ class Model_Trainer:
         model.train()
         for epoch in tqdm(range(epochs),desc=f"model training..."):
             for batch in data_loader:
-                batch=batch.to(device)
                 inputs,labels=batch
+                inputs=inputs.to(device)
+                labels=labels.to(device)
                 outputs=model(x=inputs)
                 loss=MSELoss(outputs,labels)
                 optimizer.zero_grad()
@@ -28,8 +29,9 @@ class Model_Trainer:
         with torch.no_grad():
             mse_loss_list=[]
             for batch in tqdm(data_loader,desc=f"model evaluating..."):
-                batch=batch.to(device)
                 inputs,labels=batch
+                inputs=inputs.to(device)
+                labels=labels.to(device)
                 outputs=model(x=inputs)
                 mse_loss=MSELoss(outputs,labels)
                 mse_loss_list.append(mse_loss.item())

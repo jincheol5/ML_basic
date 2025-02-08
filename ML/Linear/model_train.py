@@ -37,5 +37,5 @@ class Model_Trainer:
                 labels=labels.to(device)
                 outputs=model(x=inputs)
                 loss=criterion(outputs,labels)
-                total_loss.append(loss)
+                total_loss.append(loss.item())
         print(f"MSE Loss: {np.mean(total_loss)}")

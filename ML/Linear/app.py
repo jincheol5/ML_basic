@@ -28,9 +28,9 @@ y=3*x+2
 dataset=CustomDataset(x=x,y=y)
 train_size=int(0.9*len(dataset))
 test_size=len(dataset)-train_size
-train_dataset,test_datset=random_split(dataset=dataset,lengths=[train_size,test_size])
+train_dataset,test_dataset=random_split(dataset=dataset,lengths=[train_size,test_size])
 train_data_loader=DataLoader(dataset=train_dataset,batch_size=32,shuffle=True)
-test_data_loader=DataLoader(dataset=test_datset,batch_size=32,shuffle=True)
+test_data_loader=DataLoader(dataset=test_dataset,batch_size=32,shuffle=True)
 
 """
 model set and train

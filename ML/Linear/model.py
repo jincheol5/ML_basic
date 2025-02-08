@@ -6,8 +6,8 @@ class CustomLinear(nn.Module):
         super().__init__()
         self.layer=nn.Sequential(
             nn.Linear(in_features=input_dim,out_features=hidden_dim),
-            nn.Linear(in_features=hidden_dim,out_features=output_dim),
-            nn.ReLU()
+            nn.ReLU(),
+            nn.Linear(in_features=hidden_dim,out_features=output_dim)
         )
     def forward(self,x):
         y=self.layer(x)

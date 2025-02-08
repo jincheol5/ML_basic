@@ -28,6 +28,7 @@ class Model_Trainer:
         model.to(device)
         model.eval()
         criterion=MSELoss()
+        total_loss=[]
         with torch.no_grad():
             mse_loss_list=[]
             for batch in tqdm(data_loader,desc=f"model evaluating..."):
@@ -36,5 +37,5 @@ class Model_Trainer:
                 labels=labels.to(device)
                 outputs=model(x=inputs)
                 loss=criterion(outputs,labels)
-                mse_loss_list.append(loss.item())
-        print(f"MSE Loss: {np.mean(mse_loss_list)}")
+                total_loss.append(loss)
+        print(f"MSE Loss: {np.mean(total_loss)}")

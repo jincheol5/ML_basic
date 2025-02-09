@@ -13,7 +13,7 @@ wandb
 wandb.init(project='ML_basic',config={
     'seed':42,
     'lr':0.0005,
-    'epochs':100,
+    'epochs':1000,
     'batch_size':32
 })
 config=wandb.config

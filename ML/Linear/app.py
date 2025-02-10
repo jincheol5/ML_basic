@@ -15,7 +15,7 @@ wandb.init(project='ML_basic',config={
     'lr':0.0005,
     'epochs':1000,
     'batch_size':32
-})
+},name='ML_basic')
 config=wandb.config
 
 """

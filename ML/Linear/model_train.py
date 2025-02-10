@@ -25,7 +25,7 @@ class Model_Trainer:
                 loss.backward()
                 optimizer.step()
             epoch_loss=sum_batch_loss/len(data_loader)
-            wandb.log({"Training MSE Loss": epoch_loss},step=epoch)
+            wandb.log({"Train MSE Loss": epoch_loss},step=epoch)
         wandb.finish()
 
     @staticmethod

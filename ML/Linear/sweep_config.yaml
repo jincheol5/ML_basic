@@ -1,4 +1,18 @@
+program: app.py
 method: random
 metric:
   name: mse_loss
   goal: minimize
+parameters:
+  optimizer:
+    values: ['adam','sgd']
+  lr:
+    max: 0.1
+    min: 0.0001
+    distribution: log_uniform_values  # log scale로 학습률 조정
+  epochs:
+    values: [50,100,1000]
+  batch_size:
+    values: [16,32,64]
+  seed:
+    values: [42,84,126]

@@ -8,11 +8,11 @@ class Model_Trainer:
     @staticmethod
     def train(model,data_loader,config):
         device=torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        optimizer=torch.optim.Adam(model.parameters(),lr=config['lr'])
+        optimizer=torch.optim.Adam(model.parameters(),lr=config.lr) if config.optimizer=='adam' else torch.optim.SGD(model.parameters(),lr=config.lr)
         model.to(device)
         model.train()
         criterion=MSELoss()
-        for epoch in tqdm(range(config['epochs']),desc=f"model training..."):
+        for epoch in tqdm(range(config.epochs),desc=f"model training..."):
             sum_batch_loss=0.0
             for batch in data_loader:
                 inputs,labels=batch
@@ -25,7 +25,7 @@ class Model_Trainer:
                 loss.backward()
                 optimizer.step()
             epoch_loss=sum_batch_loss/len(data_loader)
-            wandb.log({"Train MSE Loss": epoch_loss},step=epoch)
+            wandb.log({"mse_loss": epoch_loss},step=epoch)
         wandb.finish()
 
     @staticmethod

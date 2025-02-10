@@ -8,16 +8,6 @@ from dataset import CustomDataset
 from model_train import Model_Trainer
 import torch
 from torch.utils.data import random_split,DataLoader
-"""
-wandb
-"""
-# wandb.init(project='ML_basic',config={
-#     'seed':42,
-#     'lr':0.0005,
-#     'epochs':1000,
-#     'batch_size':32
-# },name='ML_basic')
-# config=wandb.config
 
 """
 1. get sweep_config dict from yaml file
@@ -26,20 +16,24 @@ wandb
 with open('./config.yaml') as file:
     sweep_config=yaml.safe_load(file)
 sweep_id=wandb.sweep(sweep=sweep_config,project='ML_basic')
-wandb.init()
-"""
-seed setting
-"""
-random.seed(wandb.config.seed)
-np.random.seed(wandb.config.seed)
-torch.manual_seed(wandb.config.seed) 
-os.environ["PYTHONHASHSEED"]=str(wandb.config.seed)
-torch.cuda.manual_seed(wandb.config.seed)
-torch.cuda.manual_seed_all(wandb.config.seed)
-torch.backends.cudnn.deterministic=True 
-torch.backends.cudnn.benchmark=False
 
 def main():
+    """
+    wandb.init()
+    """
+    wandb.init()
+    """
+    seed setting
+    """
+    random.seed(wandb.config.seed)
+    np.random.seed(wandb.config.seed)
+    torch.manual_seed(wandb.config.seed) 
+    os.environ["PYTHONHASHSEED"]=str(wandb.config.seed)
+    torch.cuda.manual_seed(wandb.config.seed)
+    torch.cuda.manual_seed_all(wandb.config.seed)
+    torch.backends.cudnn.deterministic=True 
+    torch.backends.cudnn.benchmark=False
+
     """
     create simple data
     """

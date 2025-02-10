@@ -1,0 +1,4 @@
+method: random
+metric:
+  name: mse_loss
+  goal: minimize

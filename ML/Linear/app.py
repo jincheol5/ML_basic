@@ -13,7 +13,7 @@ from torch.utils.data import random_split,DataLoader
 1. get sweep_config dict from yaml file
 2. get sweep_id using wandb.sweep()
 """
-with open('./config.yaml') as file:
+with open('./sweep_config.yaml') as file:
     sweep_config=yaml.safe_load(file)
 sweep_id=wandb.sweep(sweep=sweep_config,project='ML_basic')
 
